@@ -1,0 +1,104 @@
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: {
+     equationNumbers: {  autoNumber: "AMS"  },
+     extensions: ["AMSmath.js", "AMSsymbols.js", "autobold.js", "color.js"]
+  }
+});
+</script>
+<script type="text/javascript"
+ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<form method=post action=""/>
+
+
+<table>
+  <tr>
+
+    <td>
+        <table>
+          <tr>
+            <td>Name of independent variable</td>
+            <td>{{  form.independent_variable}}</td>
+
+          </tr>
+          <tr>
+            <td>Expression in independent variable</td>
+            <td>{{  form.formula  }}</td>
+
+          </tr>
+          <tr>
+            <td>Minimum x value in plot</td>
+            <td>{{  form.xMin}}</td>
+
+          </tr>
+            <tr>
+            <td>Maximum x value in plot</td>
+            <td>{{  form.xMax  }}</td>
+            </tr>
+
+            <tr>
+            <td>Minimum y value in plot</td>
+            <td>{{  form.yMin  }}</td>
+            </tr>
+
+            <tr>
+            <td>Maximum y value in plot</td>
+            <td>{{  form.yMax  }}</td>
+            </tr>
+
+           <tr>
+                <td>Point for series expansion</td>
+                <td>{{  form.degree_of_approximation  }}</td>
+           </tr>
+
+            <tr>
+              <td>Polynomial degree of series approximation (N)</td>
+              <td>{{  form.N  }}</td>
+            </tr>
+            <tr>
+              <td>Location of Legend</td>
+              <td>{{  form.legend_loc  }}</td>
+            </tr>
+            <tr>
+              <td>Erase all curves?</td>
+              <td>{{  form.eCurves  }}</td>
+                <br>
+            </tr>
+            <tr>
+                <td>
+                    <input type=submit value="Compute">
+                </td>
+            </tr>
+          </tr>
+        </table>
+    </td>
+      <td>
+        <table>
+            <tr>
+                <td align="center">
+                    {% if result != None %}
+                        <img src="{{ result }}" width="500" >
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% if result_2 != None %}
+            <tr>
+                <td align="center"><p>Series expansion of the formula: </p></td>
+            </tr>
+            <tr>
+                <td align="center">
+
+                        \( {{ result_2}} \)
+
+                </td>
+            </tr>
+            {% endif %}
+
+        </table>
+    </td>
+  </tr>
+</table>
