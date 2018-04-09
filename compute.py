@@ -15,35 +15,57 @@ def latexSeries(formula, indipendent_variable, N, x0=0):
 
 
 # change formula to series expansion
-def formula2series(formula, indipendent_variable, N, xMin, xMax, yMin, yMax, x0=0):
+def formula2series(formula, indipendent_variable, N, xMin, xMax, yMin, yMax, c, d, x0=0):
     # translate to sympy
+
     formula = sympify(formula)
-
     indipendent_variable = symbols(indipendent_variable)
-
     # make into series equation now
     formulaSeries = formula.series(indipendent_variable, x0, N + 1).removeO()
-
     formulaSeries = sp.lambdify(indipendent_variable, formulaSeries, modules=['numpy'])
-
     t = np.linspace(xMin, xMax)
-
     # plot the series expansion formula
-    fig, ax = plt.subplots()
-    ax.set_xlim((xMin, xMax))
-    ax.set_ylim((yMin, yMax))
-    ax.plot(t, formulaSeries(t))
+    form_fun = sp.lambdify(indipendent_variable, formula)
+    if c == 'yes' or c == 'Yes':
 
-    ax.set(xlabel='X Axis ', ylabel='Y Axis',
-           title='Example Four Graph')
+        fig, ax = plt.subplots()
+        ax.set_xlim((xMin, xMax))
+        ax.set_ylim((yMin, yMax))
+        ax.plot(t, formulaSeries(t), t, form_fun(t))
+        ax.set(xlabel='X Axis ', ylabel='Y Axis',
+               title='Exercise Four Graph')
+        if d == 'top right' or d == 'Top Right':
+            ax.legend(loc=1)
+        elif d == 'bottom right' or d == 'Bottom Right':
+            ax.legend(loc=4)
+        elif d == 'bottom left' or d == 'Bottom Left':
+            ax.legend(loc=3)
+        elif d == 'top left' or d == 'Top Left':
+            ax.legend(loc=2)
+        ax.grid()
+        fig.savefig("test.png")
+    elif c == 'no' or c == 'No':
+        Nstr = str(N)
+        plt.ylim(yMin, yMax)
+        plt.plot(t, formulaSeries(t), label=('Series, N = ', Nstr))
+        plt.title("Exercise Four Graph")
+        if d == 'top right' or d == 'Top Right':
+            plt.legend(loc=1)
+        elif d == 'bottom right' or d == 'Bottom Right':
+            plt.legend(loc=4)
+        elif d == 'bottom left' or d == 'Bottom Left':
+            plt.legend(loc=3)
+        elif d == 'top left' or d == 'Top Left':
+            plt.legend(loc=2)
 
-    ax.grid()
-    fig.savefig("test.png")
 
 
 
 
-def compute(formula, indipendent_variable, N, xMin, xMax, yMin, yMax, eCurves):
+
+
+
+def compute(formula, indipendent_variable, N, xMin, xMax, yMin, yMax, eCurves, legLoc):
     # print(type(formula))
     # print(type(indipendent_variable))
     # print(type(N))
@@ -52,7 +74,7 @@ def compute(formula, indipendent_variable, N, xMin, xMax, yMin, yMax, eCurves):
     # print(type(yMin))
     # print(type(yMax))
     # print(type(x0))
-    formula2series(formula, indipendent_variable, N, xMin, xMax, yMin, yMax)
+    formula2series(formula, indipendent_variable, N, xMin, xMax, yMin, yMax, eCurves, legLoc)
     if not os.path.isdir('static'):
         os.mkdir('static')
     else:
